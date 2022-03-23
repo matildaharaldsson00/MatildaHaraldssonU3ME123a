@@ -1,0 +1,17 @@
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+#searchStudent {
+    height: 50px;
+    width: 50vw;
+    background-color: beige;
+}
+
+#searchResult {
+    height: 100px;
+    width: 50vw;
+    background-color: beige;
+    margin-top: 40px;
+}
