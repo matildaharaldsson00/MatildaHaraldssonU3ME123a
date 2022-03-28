@@ -67,12 +67,13 @@ function courseResponsible(id) {
 function allTeacherInfo(id) {
     let course = DATABASE.courses[i];
     let teachersNames = allTeachers.map((teacher) => teacher.firstName + " " + teacher.lastName + " " + `(${teacher.post})`);
-    let teacher = [];
+    let teachers = [];
 
     for(let i = 0; i < teachersNames.length; i++) {
         if(course.teachers.some((value) => value == i)) {
             let div = document.createElement("div");
             let info = div.innerHTML = `<p>${teachersNames[i]}</p>`
+            teachers.push(info);
         }
     }
     return teachers.toString().split(",").join(" ");
