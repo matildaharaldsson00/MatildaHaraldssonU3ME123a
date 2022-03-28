@@ -30,7 +30,7 @@ function renderStudent(student) {
     div.classList.add("student")
 
     div.innerHTML = `
-        <div>${student.firstName} ${student.lastName} (Totala: ${credits} högskolepoäng)</div>
+        <div>${student.firstName} ${student.lastName} (Totalt ${credits} högskolepoäng)</div>
         <div id=courses>Kurser:</div>
     `;
 
