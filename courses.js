@@ -47,13 +47,17 @@ function renderCourse(id) {
     let div = document.createElement("div");
     div.id = "course-div";
     div.innerHTML += `
-    <h2>${allCourses.title} (Totalt ${allCourses.totalCredits} högskolepoäng)</h2>
+    <h2>${coursesTitle(id)} (Totalt ${totalCourseCredits(id)} högskolepoäng)</h2>
+   <div id="techer-div">
     <h3>Lärare:</h3>
-    <div id=teachers-div>
     ${allTeacherInfo(id)}
     </div>
+    <div id="resp-div">
+    <h3>Kursansvarig</h3>
+    <p>${courseResponsible(id)}</p>
+    </div>
+    <div id="students-div">
     <h3>Studenter:</h3>
-    <div id=course-div>
     ${allStudentInfo(id)}
     </div>
     `;
@@ -68,6 +72,18 @@ function renderCourses(courses) {
         let courseElement = renderCourse(course.courseId);
         coursesElement.appendChild(courseElement);
     }
+}
+
+// funktion för att hitta titlarna på kurserna
+function coursesTitle(id) {
+    let course = DATABASE.courses[id];
+    return course.title;
+}
+
+// funktion för att få fram hur många högskolepoäng varje kurs har
+function totalCourseCredits(id) {
+    let course = allCourses[id];
+    return course.totalCredits;
 }
 
 function passedCredits(student) {
