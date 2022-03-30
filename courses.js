@@ -146,6 +146,15 @@ function allStudentInfo(id) {
 //     }
 // });
 
+// det här gick inte bra! kolla på det!!!
+// function markCourseResponsible() {
+//     let responsible = DATABASE.courses[i].courseResponsible;
+
+//     for(let i = 0; i < responsible.length; i++) {
+//         let teacherName = DATABASE.teachers[i].firstName + lastName;
+//     } if(teacherName == )
+// }
+
 function inputResult() {
     let arrayResult = [];
     let input = document.getElementById("courses");
