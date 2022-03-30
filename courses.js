@@ -130,37 +130,70 @@ function allTeacherInfo(id) {
 //     return students.toString().split(",").join("");
 // }
 
-function allStudentInfo() {
-    let studentBox = [];
+// function allStudentInfo() {
+//     let studentBox = [];
 
-    for(let i = 0; i < DATABASE.students.length; i++) {
-        let div = document.createElement("div");
-        for(let x = 0; x < DATABASE.students[i].courses.length; x++) {
-            if(DATABASE.students[i].courses[x].courseId == DATABASE.courses[x].courseId && DATABASE.students[i].courses[x].passedCredits == DATABASE.courses.totalCredits) {
-                let info = div.innerHTML = 
-                `<div class="done">
-                <h5>
-                ${DATABASE.students[i].firstName} ${DATABASE.students[i].lastName}
-                (${DATABASE.students[i].courses[x]} högskolepoäng)<br>
-                ${DATABASE.students[i].courses[x].started.semester} ${DATABASE.students[i].courses[x].started.year}
-                </h5>
-                </div>`
-                studentBox.push (info);
-            } else if(DATABASE.students[i].courses[x].courseId == DATABASE.courses[x].courseId) {
-                let info = div.innerHTML = 
-                `<div class="not-done">
-                <h5>
-                ${DATABASE.students[i].firstName} ${DATABASE.students[i].lastName}
-                (${DATABASE.students[i].courses[x].passedCredits} högskolepoäng)<br>
-                ${DATABASE.students[i].courses[x].started.semester} ${DATABASE.students[i].courses[x].started.year}
-                </h5>
-                </div>`
-                studentBox.push(info);
+//     for(let i = 0; i < DATABASE.students.length; i++) {
+//         let div = document.createElement("div");
+//         for(let x = 0; x < DATABASE.students[i].courses.length; x++) {
+//             if(DATABASE.students[i].courses[x].courseId == DATABASE.courses[x].courseId && DATABASE.students[i].courses[x].passedCredits == DATABASE.courses.totalCredits) {
+//                 let info = div.innerHTML = 
+//                 `<div class="done">
+//                 <h5>
+//                 ${DATABASE.students[i].firstName} ${DATABASE.students[i].lastName}
+//                 (${DATABASE.students[i].courses[x]} högskolepoäng)<br>
+//                 ${DATABASE.students[i].courses[x].started.semester} ${DATABASE.students[i].courses[x].started.year}
+//                 </h5>
+//                 </div>`
+//                 studentBox.push (info);
+//             } else if(DATABASE.students[i].courses[x].courseId == DATABASE.courses[x].courseId) {
+//                 let info = div.innerHTML = 
+//                 `<div class="not-done">
+//                 <h5>
+//                 ${DATABASE.students[i].firstName} ${DATABASE.students[i].lastName}
+//                 (${DATABASE.students[i].courses[x].passedCredits} högskolepoäng)<br>
+//                 ${DATABASE.students[i].courses[x].started.semester} ${DATABASE.students[i].courses[x].started.year}
+//                 </h5>
+//                 </div>`
+//                 studentBox.push(info);
+//             }
+//         }
+//     }
+//     return studentBox.toString().split(",").join(" ");
+// }
+
+function courseStarted(takenCourse, student) {
+    let courseStart = student.courses.filter((course) => course.courseId == takenCourse.courseId).map((course) => `${course.started.semester} ${course.started.year}`);
+    return courseStart;
+}
+
+function allStudentInfo(id) {
+    let courseId = DATABASE.courses[id].courseId;
+    let students = allStudents.filter((student) => student.courses.some((course) => course.courseId == courseId));
+    let studentsDiv = [];
+        for(let student of students) {
+            let courseById = student.courses.filter((course) => course.courseId == courseId);
+            for(let i = 0; i < courseById.length; i++) {
+                if(passedCredits(courseById[i], student)[i] == DATABASE.courses[id].totalCredits) {
+                    let div = document.createElement("div");
+                    let info = div.innerHTML = `<div class="done">
+                    <p>${student.firstName} ${student.lastName} (${passedCredits(courseById[i], student)[i]} högskolepoäng)</p>
+                    <h5>${courseStarted(courseById[i], student)[i]}</h5>
+                    </div>`
+                    studentsDiv.push(info);
+                } else {
+                    let div = document.createElement("div");
+                    let info = div.innerHTML = `<div class="not-done">
+                    <p>${student.firstName} ${student.lastName} (${passedCredits(courseById[i], student)[i]} högskolepoäng)</p>
+                    <h5>${courseStarted(courseById[i], student)[i]}</h5>
+                    </div>`
+                    studentsDiv.push(info);
+                }
             }
         }
-    }
-    return studentBox.toString().split(",").join(" ");
+    return studentsDiv.toString().split(",").join(" ");
 }
+
 
 // event-listener för att kära funktionerna och filtrera genom kurserna varje gång sök trycks
 // inputCourse.addEventListener("keyup", function() {
