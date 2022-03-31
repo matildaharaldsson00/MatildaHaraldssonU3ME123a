@@ -30,8 +30,8 @@ function renderStudent(student) {
     div.classList.add("student")
 
     div.innerHTML = `
-        <div>${student.firstName} ${student.lastName} (Totalt ${credits} högskolepoäng)</div>
-        <div id=courses>Kurser:</div>
+        <div id="student-info">${student.firstName} ${student.lastName} (Total ${credits} credits)</div>
+        <div id=courses>Courses</div>
     `;
 
     for(let i = 0; i < foundCourses.length; i++) {
@@ -54,11 +54,11 @@ function renderStudent(student) {
 
         let courseInfo = document.createElement("p");
         courseTitle.appendChild(courseInfo);
-        courseInfo.innerText = semester + " " + year + " " + "(" + passedCredits + " " + "av" + " " + foundCourse.totalCredits + " " + "högskolepoäng" + ")";
+        courseInfo.innerText = semester + " " + year + " " + "(" + passedCredits + " " + "of" + " " + foundCourse.totalCredits + " " + "credits" + ")";
 
         if(passedCredits == foundCourse.totalCredits) {
             let course = courseInfo.parentElement;
-            course.style.backgroundColor = "green";
+            course.style.backgroundColor = "rgb(182, 206, 182)";
         }
     }
 }
