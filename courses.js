@@ -1,48 +1,11 @@
 "use strict"; 
 
-// global variabel för sökrutan
-// let inputCourse = document.getElementById("courses");
-
 //globala variabel för att komma åt studenterna, lärarna och kurserna i databasen
 let allTeachers = DATABASE.teachers;
 let allStudents = DATABASE.students;
 let allCourses = DATABASE.courses;
 
-// funktion för att rensa sökrutan när man uppdaterar sidan
-// window.onload = function() {
-//     document.getElementById("courses").value = "";
-// };
-
-// funktion för att hitta kurserna i databasen baserat på kurs id
-// function findCoursesByTitle() {
-//     let course = DATABASE.courses.filter((course) => 
-//     course.title.toLowerCase().includes(inputCourse.value.toLowerCase())
-//     );
-//     return course;
-// }
-
-// 
-// function renderCourse(course) {
-//     let divCourse = document.createElement("div");
-
-//     let courseDiv = document.getElementById("searchCourseResult");
-//     courseDiv.appendChild(divCourse);
-
-//     divCourse.classList.add("course")
-    
-//     divCourse.innerHTML = `
-//     <div>${course.title} Totalt ${course.totalCredits} högksolepoäng</div>
-//     <div id=teacher>Lärare: ${allTeacherInfo}</div>
-//     <div id=students>Studenter som gått kursen: ${allStudentInfo}</div>
-//     `;
-// }
-
-// funktion som ska gå igenom varje kurs och lägger till HTML
-// function renderCourses(courses) {
-//     courses.forEach((course) => {
-//         renderCourse(course);
-//     });
-// }
+// funktion som ska gå igenom varje kurs och lägger till HTML, info om lärare och mera
 function renderCourse(id) {
     let div = document.createElement("div");
     div.id = "course-div";
@@ -86,6 +49,7 @@ function totalCourseCredits(id) {
     return course.totalCredits;
 }
 
+// funktion för att få fram hur många högskolepoäng varje elev har
 function passedCredits(takenCourse, student) {
     let passedCredit = student.courses.filter((course) => course.courseId == takenCourse.courseId).map((course) => course.passedCredits);
     return passedCredit;
@@ -115,58 +79,13 @@ function allTeacherInfo(id) {
     return teachers.toString().split(",").join(" ");
 }
 
-// information om studenterna
-// function allStudentInfo(id) {
-//     let courseId = DATABASE.courses[id].courseId;
-//     let students = [];
-
-//     for(let student of allStudents) {
-//         for(let course of student.courses) {
-//             if(course.courseId == courseId) {
-//                 students.push(student);
-//             }
-//         }
-//     }
-//     return students.toString().split(",").join("");
-// }
-
-// function allStudentInfo() {
-//     let studentBox = [];
-
-//     for(let i = 0; i < DATABASE.students.length; i++) {
-//         let div = document.createElement("div");
-//         for(let x = 0; x < DATABASE.students[i].courses.length; x++) {
-//             if(DATABASE.students[i].courses[x].courseId == DATABASE.courses[x].courseId && DATABASE.students[i].courses[x].passedCredits == DATABASE.courses.totalCredits) {
-//                 let info = div.innerHTML = 
-//                 `<div class="done">
-//                 <h5>
-//                 ${DATABASE.students[i].firstName} ${DATABASE.students[i].lastName}
-//                 (${DATABASE.students[i].courses[x]} högskolepoäng)<br>
-//                 ${DATABASE.students[i].courses[x].started.semester} ${DATABASE.students[i].courses[x].started.year}
-//                 </h5>
-//                 </div>`
-//                 studentBox.push (info);
-//             } else if(DATABASE.students[i].courses[x].courseId == DATABASE.courses[x].courseId) {
-//                 let info = div.innerHTML = 
-//                 `<div class="not-done">
-//                 <h5>
-//                 ${DATABASE.students[i].firstName} ${DATABASE.students[i].lastName}
-//                 (${DATABASE.students[i].courses[x].passedCredits} högskolepoäng)<br>
-//                 ${DATABASE.students[i].courses[x].started.semester} ${DATABASE.students[i].courses[x].started.year}
-//                 </h5>
-//                 </div>`
-//                 studentBox.push(info);
-//             }
-//         }
-//     }
-//     return studentBox.toString().split(",").join(" ");
-// }
-
+// funktion för att se när kursen startar
 function courseStarted(takenCourse, student) {
     let courseStart = student.courses.filter((course) => course.courseId == takenCourse.courseId).map((course) => `${course.started.semester} ${course.started.year}`);
     return courseStart;
 }
 
+// funktion för informationen om studenterna, se vilka studenter som är klara med kurserna och inte
 function allStudentInfo(id) {
     let courseId = DATABASE.courses[id].courseId;
     let students = allStudents.filter((student) => student.courses.some((course) => course.courseId == courseId));
@@ -194,29 +113,7 @@ function allStudentInfo(id) {
     return studentsDiv.toString().split(",").join(" ");
 }
 
-
-// event-listener för att kära funktionerna och filtrera genom kurserna varje gång sök trycks
-// inputCourse.addEventListener("keyup", function() {
-//     let course = renderCourses();
-//     let coursesDiv = document.getElementById("searchCourseResult");
-
-//     coursesDiv.innerHTML = "";
-//     renderCourses(course);
-
-//     if(inputCourse.value == 0) {
-//         coursesDiv.innerHTML = "";
-//     }
-// });
-
-// det här gick inte bra! kolla på det!!!
-// function markCourseResponsible() {
-//     let responsible = DATABASE.courses[i].courseResponsible;
-
-//     for(let i = 0; i < responsible.length; i++) {
-//         let teacherName = DATABASE.teachers[i].firstName + lastName;
-//     } if(teacherName == )
-// }
-
+// funktion för att få upp sökresutlatet på sidan, rätt info 
 function inputResult() {
     let arrayResult = [];
     let input = document.getElementById("courses");
