@@ -10,17 +10,17 @@ function renderCourse(id) {
     let div = document.createElement("div");
     div.id = "course-div";
     div.innerHTML += `
-    <h2>${coursesTitle(id)} (Totalt ${totalCourseCredits(id)} högskolepoäng)</h2>
-   <div id="techer-div">
-    <h3>Lärare:</h3>
+    <h2>${coursesTitle(id)} (Total ${totalCourseCredits(id)} credits)</h2>
+    <div id="teacher-div">
+    <h3>Teachers</h3>
     <div>${allTeacherInfo(id)}</div>
     </div>
     <div id="resp-div">
-    <h3>Kursansvarig</h3>
+    <h3>Course responible</h3>
     <div id="resp-info">${courseResponsible(id)}</div>
     </div>
     <div id="students-div">
-    <h3>Studenter:</h3>
+    <h3>Students</h3>
     <div>${allStudentInfo(id)}</div>
     </div>
     `;
